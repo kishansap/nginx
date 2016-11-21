@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  tasks:
+  - name: installing nginx
+    yum: pkg=nginx state=installed update_cache=true
+  - replace: dest=/etc/nginx/nginx.conf          regexp='listen       80' replace='listen        8888'
+  - name: download sample page
+    get_url:
+       url: https://s3.amazonaws.com/kishan-test123/index.html
+       dest: /etc/nginx/index.html
+
+  - name: deploy sample application
+    copy: src=/etc/nginx/index.html dest=/usr/share/nginx/html mode=0644
+
+
+
+    
